@@ -8,12 +8,12 @@ namespace Domain
 
         public decimal Amount { get; set; }
 
-        public string PaymentMethod { get; set; } = string.Empty;
+        public ListValue PaymentMethod { get; set; }
 
         public string Message { get; set; } = string.Empty;
 
         public long DonorId { get; set; }
 
-        public short StatusId { get; set; }
+        public ListValue Status { get; set; }
     }
 }
