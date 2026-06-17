@@ -21,11 +21,11 @@ namespace Application.Services
 
             var transaction = new Transaction
             {
-                TranCode = request.TranCode.Trim(),
+                DonorFullName = request.DonorFullName.Trim(),
+                Email = request.Email.Trim(),
                 Amount = request.Amount,
                 PaymentMethod = new ListValue { ListValueId = request.PaymentMethod },
                 Message = request.Message.Trim(),
-                DonorId = request.DonorId,
                 Status = new ListValue { ListValueId = request.StatusId }
             };
 
@@ -40,9 +40,14 @@ namespace Application.Services
 
         private static void Validate(CreateTransactionRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.TranCode))
+            if (string.IsNullOrWhiteSpace(request.DonorFullName))
             {
-                throw new ArgumentException("Transaction code is required.", nameof(request));
+                throw new ArgumentException("Donor full name is required.", nameof(request));
+            }
+
+            if (string.IsNullOrWhiteSpace(request.Email))
+            {
+                throw new ArgumentException("Email is required.", nameof(request));
             }
 
             if (request.Amount <= 0)
@@ -53,11 +58,6 @@ namespace Application.Services
             if (request.PaymentMethod <= 0)
             {
                 throw new ArgumentException("Payment method is required.", nameof(request));
-            }
-
-            if (request.DonorId <= 0)
-            {
-                throw new ArgumentException("Donor is required.", nameof(request));
             }
 
             if (request.StatusId <= 0)
