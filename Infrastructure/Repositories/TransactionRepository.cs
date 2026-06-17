@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories
         public async Task<long> CreateAsync(Transaction transaction, CancellationToken cancellationToken = default)
         {
             const string sql = """
-                INSERT INTO Transactions
+                INSERT INTO [dbo].[Transaction]
                     (TranCode, Amount, PaymentMethod, Message, DonorId, StatusId)
                 OUTPUT INSERTED.TranId
                 VALUES
