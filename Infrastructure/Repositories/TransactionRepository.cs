@@ -19,10 +19,10 @@ namespace Infrastructure.Repositories
         {
             const string sql = """
                 INSERT INTO [dbo].[Transaction]
-                    (TranCode, Amount, PaymentMethod, Message, DonorId, StatusId)
+                    (DonorFullName, Email, Amount, PaymentMethod, Message, StatusId)
                 OUTPUT INSERTED.TranId
                 VALUES
-                    (@TranCode, @Amount, @PaymentMethod, @Message, @DonorId, @StatusId);
+                    (@DonorFullName, @Email, @Amount, @PaymentMethod, @Message, @StatusId);
                 """;
 
             await using var connection = _connectionFactory.CreateConnection();
@@ -31,11 +31,11 @@ namespace Infrastructure.Repositories
             await using var command = connection.CreateCommand();
             command.CommandText = sql;
 
-            AddParameter(command, "@TranCode", DbType.String, transaction.TranCode);
+            AddParameter(command, "@DonorFullName", DbType.String, transaction.DonorFullName);
+            AddParameter(command, "@Email", DbType.String, transaction.Email);
             AddDecimalParameter(command, "@Amount", transaction.Amount);
             AddParameter(command, "@PaymentMethod", DbType.Int32, transaction.PaymentMethod.ListValueId);
             AddParameter(command, "@Message", DbType.String, transaction.Message);
-            AddParameter(command, "@DonorId", DbType.Int64, transaction.DonorId);
             AddParameter(command, "@StatusId", DbType.Int32, transaction.Status.ListValueId);
 
             var result = await command.ExecuteScalarAsync(cancellationToken);
