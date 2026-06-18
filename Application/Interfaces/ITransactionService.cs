@@ -7,5 +7,10 @@ namespace Application.Interfaces
         Task<CreateTransactionResponse> CreateAsync(
             CreateTransactionRequest request,
             CancellationToken cancellationToken = default);
+
+        Task<PagedResult<TransactionResponse>> GetPagedAsync(
+            int pageNumber,
+            int pageSize,
+            CancellationToken cancellationToken = default);
     }
 }

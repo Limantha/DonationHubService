@@ -15,6 +15,27 @@ namespace Api.Controllers
             _transactionService = transactionService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10,
+            CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var response = await _transactionService.GetPagedAsync(
+                    pageNumber,
+                    pageSize,
+                    cancellationToken);
+
+                return Ok(response);
+            }
+            catch (ArgumentException exception)
+            {
+                return BadRequest(new { message = exception.Message });
+            }
+        }
+
         [HttpPost]
         [Consumes("application/json")]
         public async Task<IActionResult> Create(
