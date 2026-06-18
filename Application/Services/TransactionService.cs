@@ -38,6 +38,37 @@ namespace Application.Services
             };
         }
 
+        public async Task<PagedResult<TransactionResponse>> GetPagedAsync(
+            int pageNumber,
+            int pageSize,
+            CancellationToken cancellationToken = default)
+        {
+            ValidatePagination(pageNumber, pageSize);
+
+            var (transactions, totalCount) = await _transactionRepository.GetPagedAsync(
+                pageNumber,
+                pageSize,
+                cancellationToken);
+
+            return new PagedResult<TransactionResponse>
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalCount = totalCount,
+                Items = transactions.Select(transaction => new TransactionResponse
+                {
+                    TranId = transaction.TranId,
+                    TranCode = transaction.TranCode,
+                    DonorFullName = transaction.DonorFullName,
+                    Email = transaction.Email,
+                    Amount = transaction.Amount,
+                    PaymentMethod = transaction.PaymentMethod.ListValueId,
+                    Message = transaction.Message,
+                    StatusId = transaction.Status.ListValueId
+                }).ToList()
+            };
+        }
+
         private static void Validate(CreateTransactionRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.DonorFullName))
@@ -63,6 +94,24 @@ namespace Application.Services
             if (request.StatusId <= 0)
             {
                 throw new ArgumentException("Status is required.", nameof(request));
+            }
+        }
+
+        private static void ValidatePagination(int pageNumber, int pageSize)
+        {
+            if (pageNumber <= 0)
+            {
+                throw new ArgumentException("Page number must be greater than zero.", nameof(pageNumber));
+            }
+
+            if (pageSize <= 0)
+            {
+                throw new ArgumentException("Page size must be greater than zero.", nameof(pageSize));
+            }
+
+            if (pageSize > 100)
+            {
+                throw new ArgumentException("Page size cannot be greater than 100.", nameof(pageSize));
             }
         }
     }
