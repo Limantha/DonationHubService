@@ -6,6 +6,10 @@ namespace Application.DTOs
 
         public string TranCode { get; set; } = string.Empty;
 
+        public int TenantId { get; set; }
+
+        public string CharityName { get; set; } = string.Empty;
+
         public string DonorFullName { get; set; } = string.Empty;
 
         public string Email { get; set; } = string.Empty;

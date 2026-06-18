@@ -24,6 +24,7 @@ namespace Infrastructure.Repositories
             command.CommandText = "dbo.CreateTransaction";
             command.CommandType = CommandType.StoredProcedure;
 
+            AddParameter(command, "@TenantId", DbType.Int32, transaction.Tenant.TenantId);
             AddParameter(command, "@DonorFullName", DbType.String, transaction.DonorFullName);
             AddParameter(command, "@Email", DbType.String, transaction.Email);
             AddDecimalParameter(command, "@Amount", transaction.Amount);
@@ -75,12 +76,13 @@ namespace Infrastructure.Repositories
                     {
                         TranId = GetInt64(reader, "TranId"),
                         TranCode = GetString(reader, "TranCode"),
+                        Tenant = new Tenant { TenantId = GetInt32(reader, "TenantId"),TenantName = GetString(reader, "CharityName") },                        
                         DonorFullName = GetString(reader, "DonorFullName"),
                         Email = GetString(reader, "Email"),
                         Amount = GetDecimal(reader, "Amount"),
-                        PaymentMethod = new ListValue { ListValueId = GetInt32(reader, "PaymentMethod") },
+                        PaymentMethod = new ListValue { ListValueName = GetString(reader, "PaymentMethod") },
                         Message = GetString(reader, "Message"),
-                        Status = new ListValue { ListValueId = GetInt32(reader, "StatusId") }
+                        Status = new ListValue { ListValueName = GetString(reader, "Status") }
                     });
                 }
             }

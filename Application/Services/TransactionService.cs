@@ -21,6 +21,7 @@ namespace Application.Services
 
             var transaction = new Transaction
             {
+                Tenant = new Tenant { TenantId = request.TenantId},
                 DonorFullName = request.DonorFullName.Trim(),
                 Email = request.Email.Trim(),
                 Amount = request.Amount,
@@ -59,6 +60,8 @@ namespace Application.Services
                 {
                     TranId = transaction.TranId,
                     TranCode = transaction.TranCode,
+                    TenantId = transaction.Tenant.TenantId,
+                    CharityName = transaction.Tenant.TenantName,
                     DonorFullName = transaction.DonorFullName,
                     Email = transaction.Email,
                     Amount = transaction.Amount,
@@ -71,6 +74,11 @@ namespace Application.Services
 
         private static void Validate(CreateTransactionRequest request)
         {
+            if (request.TenantId <= 0)
+            {
+                throw new ArgumentException("Tenant is required.", nameof(request));
+            }
+
             if (string.IsNullOrWhiteSpace(request.DonorFullName))
             {
                 throw new ArgumentException("Donor full name is required.", nameof(request));

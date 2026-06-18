@@ -2,6 +2,8 @@ namespace Application.DTOs
 {
     public class CreateTransactionRequest
     {
+        public int TenantId { get; set; }
+
         public string DonorFullName { get; set; } = string.Empty;
 
         public string Email { get; set; } = string.Empty;
