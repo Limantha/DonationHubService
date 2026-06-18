@@ -48,32 +48,14 @@ namespace Infrastructure.Repositories
             int pageSize,
             CancellationToken cancellationToken = default)
         {
-            const string sql = """
-                SELECT COUNT(1)
-                FROM [dbo].[Transaction];
-
-                SELECT
-                    TranId,
-                    TranCode,
-                    DonorFullName,
-                    Email,
-                    Amount,
-                    PaymentMethod,
-                    Message,
-                    StatusId
-                FROM [dbo].[Transaction]
-                ORDER BY TranId DESC
-                OFFSET @Offset ROWS
-                FETCH NEXT @PageSize ROWS ONLY;
-                """;
-
             await using var connection = _connectionFactory.CreateConnection();
             await connection.OpenAsync(cancellationToken);
 
             await using var command = connection.CreateCommand();
-            command.CommandText = sql;
+            command.CommandText = "dbo.GetTransactionsPaged";
+            command.CommandType = CommandType.StoredProcedure;
 
-            AddParameter(command, "@Offset", DbType.Int32, (pageNumber - 1) * pageSize);
+            AddParameter(command, "@PageNumber", DbType.Int32, pageNumber);
             AddParameter(command, "@PageSize", DbType.Int32, pageSize);
 
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
