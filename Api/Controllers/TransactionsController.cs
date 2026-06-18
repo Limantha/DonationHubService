@@ -18,7 +18,7 @@ namespace Api.Controllers
         [HttpPost]
         [Consumes("application/json")]
         public async Task<IActionResult> Create(
-            [FromForm] CreateTransactionRequest request,
+            [FromBody] CreateTransactionRequest request,
             CancellationToken cancellationToken)
         {
             try
