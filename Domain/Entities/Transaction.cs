@@ -5,7 +5,7 @@ namespace Domain.Entities
         public long TranId { get; set; }
 
         public string TranCode { get; set; } = string.Empty;
-
+        public Tenant Tenant { get; set; }
         public string DonorFullName { get; set; } = string.Empty;
 
         public string Email { get; set; } = string.Empty;
