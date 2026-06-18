@@ -16,7 +16,7 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        [Consumes("application/x-www-form-urlencoded", "multipart/form-data")]
+        [Consumes("application/json")]
         public async Task<IActionResult> Create(
             [FromForm] CreateTransactionRequest request,
             CancellationToken cancellationToken)
