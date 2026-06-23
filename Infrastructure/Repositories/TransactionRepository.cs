@@ -109,10 +109,10 @@ namespace Infrastructure.Repositories
             return reader.IsDBNull(ordinal) ? string.Empty : reader.GetString(ordinal);
         }
 
-        private static int GetInt16(DbDataReader reader, string columnName)
+        private static short GetInt16(DbDataReader reader, string columnName)
         {
             var ordinal = reader.GetOrdinal(columnName);
-            return reader.IsDBNull(ordinal) ? 0 : reader.GetInt16(ordinal);
+            return reader.IsDBNull(ordinal) ? (short)0 : (short)reader.GetInt16(ordinal);
         }
         private static int GetInt32(DbDataReader reader, string columnName)
         {
