@@ -82,7 +82,11 @@ namespace Infrastructure.Repositories
                         Amount = GetDecimal(reader, "Amount"),
                         PaymentMethod = new ListValue { ListValueName = GetString(reader, "PaymentMethod") },
                         Message = GetString(reader, "Message"),
-                        Status = new ListValue { ListValueName = GetString(reader, "Status") }
+                        Status = new ListValue { 
+                            ListValueId = GetInt32(reader, "StatusId"), 
+                            ListValueName = GetString(reader, "Status") 
+                        },
+                        CreatedAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
                     });
                 }
             }
