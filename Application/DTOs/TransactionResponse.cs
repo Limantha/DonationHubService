@@ -20,8 +20,8 @@ namespace Application.DTOs
 
         public string Message { get; set; } = string.Empty;
 
-        public int StatusId { get; set; }
-        public string Status { get; set; }
+        public short StatusId { get; set; }
+        public string Status { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
     }
 }
