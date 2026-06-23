@@ -10,10 +10,10 @@ namespace Application.DTOs
 
         public decimal Amount { get; set; }
 
-        public int PaymentMethod { get; set; }
+        public short PaymentMethod { get; set; }
 
         public string Message { get; set; } = string.Empty;
 
-        public int StatusId { get; set; }
+        public short StatusId { get; set; }
     }
 }
