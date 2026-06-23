@@ -2,11 +2,11 @@ namespace Domain.Entities
 {
     public class ListValue
     {
-        public int ListId { get; set; }
+        public short ListId { get; set; }
 
         public string ListName { get; set; } = string.Empty;
 
-        public int ListValueId { get; set; }
+        public short ListValueId { get; set; }
 
         public string ListValueName { get; set; } = string.Empty;
 

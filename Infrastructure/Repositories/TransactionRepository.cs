@@ -83,7 +83,7 @@ namespace Infrastructure.Repositories
                         PaymentMethod = new ListValue { ListValueName = GetString(reader, "PaymentMethod") },
                         Message = GetString(reader, "Message"),
                         Status = new ListValue { 
-                            ListValueId = GetInt32(reader, "StatusId"), 
+                            ListValueId = GetInt16(reader, "StatusId"), 
                             ListValueName = GetString(reader, "Status") 
                         },
                         CreatedAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
@@ -109,6 +109,11 @@ namespace Infrastructure.Repositories
             return reader.IsDBNull(ordinal) ? string.Empty : reader.GetString(ordinal);
         }
 
+        private static int GetInt16(DbDataReader reader, string columnName)
+        {
+            var ordinal = reader.GetOrdinal(columnName);
+            return reader.IsDBNull(ordinal) ? 0 : reader.GetInt16(ordinal);
+        }
         private static int GetInt32(DbDataReader reader, string columnName)
         {
             var ordinal = reader.GetOrdinal(columnName);
