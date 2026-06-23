@@ -17,5 +17,6 @@ namespace Domain.Entities
         public string Message { get; set; } = string.Empty;
 
         public ListValue Status { get; set; } = new();
+        public DateTime CreatedAt { get; set; }
     }
 }

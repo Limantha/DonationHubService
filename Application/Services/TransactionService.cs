@@ -67,7 +67,9 @@ namespace Application.Services
                     Amount = transaction.Amount,
                     PaymentMethod = transaction.PaymentMethod.ListValueId,
                     Message = transaction.Message,
-                    StatusId = transaction.Status.ListValueId
+                    StatusId = transaction.Status.ListValueId,
+                    Status = transaction.Status.ListValueName,
+                    CreatedAt = transaction.CreatedAt
                 }).ToList()
             };
         }
